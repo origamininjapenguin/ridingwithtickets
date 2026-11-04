@@ -1,0 +1,19 @@
+{
+  "name": "ticket-to-ride-online",
+  "version": "1.5.1",
+  "description": "Multiplayer online Ticket to Ride (USA) with a three.js board",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/sim.js && node test/lastround.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5",
+    "three": "0.160.0"
+  },
+  "license": "MIT"
+}

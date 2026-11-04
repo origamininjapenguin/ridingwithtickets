@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ticket to Ride Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script type="importmap">{"imports":{"three":"/vendor/three/build/three.module.js","three/addons/":"/vendor/three/examples/jsm/"}}</script>
+</head>
+<body>
+
+<main id="home" class="screen">
+  <svg class="rail" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-20 150 C 200 30, 400 190, 600 100 S 1000 20, 1220 120"/>
+  </svg>
+  <section class="ticket">
+    <h1>Ticket to Ride</h1>
+    <p class="sub">Online, for 2 to 5 players. Bots welcome.</p>
+    <button id="btnResume" class="primary hidden">Resume your game</button>
+    <label>Your name <input id="name" maxlength="16" autocomplete="nickname" placeholder="Conductor"></label>
+    <button id="btnCreate" class="primary">Start a table</button>
+    <p class="split">or join friends with a code</p>
+    <div class="row"><input id="code" maxlength="4" placeholder="ABCD" autocapitalize="characters" aria-label="Table code"><button id="btnJoin">Join table</button><button id="btnWatch" title="Watch a table as a spectator">Watch</button></div>
+    <div class="public">
+      <div class="phead"><b>Public tables</b><button id="btnRefresh" class="link">Refresh</button></div>
+      <ul id="publicList" class="plist"></ul>
+    </div>
+    <div class="linkrow"><button id="btnHelp" class="link">How to play</button><button id="btnLog" class="link">Changelog</button></div>
+  </section>
+</main>
+
+<main id="lobby" class="screen hidden">
+  <section class="ticket wide">
+    <h2>Table <span id="lobbyCode" class="code"></span></h2>
+    <p class="sub">Share the code or <button id="btnCopy" class="link">copy the invite link</button>.</p>
+    <ul id="members" class="members"></ul>
+    <div id="swatches" class="swatches" aria-label="Choose your train colour"></div>
+    <div class="settings">
+      <div class="setrow"><span>Table</span>
+        <div class="seg" id="segVis" role="group" aria-label="Table visibility"><button data-v="0">Private</button><button data-v="1">Public</button></div></div>
+      <div class="setrow"><span>Spectators</span>
+        <div class="seg" id="segSpec" role="group" aria-label="Spectators"><button data-v="1">Allowed</button><button data-v="0">Off</button></div></div>
+      <div class="setrow"><label for="selTimer">Turn timer</label>
+        <select id="selTimer"><option value="0">Off</option><option value="30">30 seconds</option><option value="60">60 seconds</option><option value="90">90 seconds</option><option value="120">2 minutes</option><option value="180">3 minutes</option></select></div>
+      <p id="setHint" class="hint"></p>
+    </div>
+    <div class="row">
+      <button id="btnBot">Add a bot</button>
+      <button id="btnStart" class="primary">Start the game</button>
+    </div>
+    <p id="lobbyHint" class="hint"></p>
+    <p id="lobbySpecs" class="hint"></p>
+    <details class="chatbox"><summary id="lobbyChatSum">Table chat</summary><div id="lobbyChat" class="chatlist"></div>
+      <form id="lobbyChatForm" class="chatform"><input id="lobbyChatInput" maxlength="200" placeholder="Say hi to the table..." autocomplete="off"><button>Send</button></form></details>
+  </section>
+</main>
+
+<div id="game" class="hidden">
+  <section id="leftcol"><div id="timer" class="panel hidden"><span id="tLabel"></span><b id="tTime"></b><i class="bar"><u id="tBar"></u></i></div><aside id="scores"></aside><section id="tpanel" class="panel tpanel hidden"></section></section>
+  <div id="boardwrap"><div id="three"></div><div id="banner"></div><button id="resultsBtn" class="hidden">Show results</button></div>
+  <section id="rightcol">
+    <div id="menuspace"></div>
+    <aside id="market" class="panel">
+      <div id="faceup"></div>
+      <div class="piles">
+        <button id="deck" class="pile deck" title="Draw from the deck"><span>Deck</span><b id="deckN"></b></button>
+        <button id="tickDeck" class="pile tix" title="Draw destination tickets"><span>Tickets</span><b id="tickN"></b></button>
+        <button id="chatToggle" class="pile chatbtn">Chat</button>
+      </div>
+    </aside>
+    <section id="logWin" class="win panel"><h4>Game log</h4><div id="log" class="feed"></div></section>
+    <section id="chatWin" class="win panel">
+      <h4>Chat</h4>
+      <div id="chat" class="feed"></div>
+      <form id="chatForm"><input id="chatInput" maxlength="200" placeholder="Say something..." autocomplete="off"><button>Send</button></form>
+      <div id="emotes"></div>
+      <p id="specNote" class="hint hidden">Spectators can read the chat but not post.</p>
+    </section>
+  </section>
+  <footer id="tray" class="panel"><div id="hand"></div><div id="mytickets"></div></footer>
+  <div id="veil" class="hidden"><div class="vcard"><h3 id="vTitle"></h3><p id="vText"></p><button id="vBtn" class="primary"></button></div></div>
+  <div id="tip" class="hidden"></div>
+</div>
+
+<button id="menuBtn" class="panel">Menu</button>
+<div id="modal" class="hidden"></div>
+<div id="toast" class="hidden"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/shared/mapdata.js"></script>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>
